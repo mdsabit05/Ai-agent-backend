@@ -8,14 +8,15 @@ import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { Chat } from "./models/Chat.js";
 import { connectDB } from "./config/db.js";
-import cookieParser from "cookie-parser";
 
-app.use(cookieParser());
+
+
 
 dotenv.config();  // .env connected
 connectDB()    // mongoDB connected
 
 const app = express();  // express server created
+
 
 app.set("trust proxy", 1);
 
@@ -56,10 +57,8 @@ app.use("/api/auth", toNodeHandler(auth));   // betterAuth aona route creat kara
 
 app.get("/api/me", async (req, res) => {
   const session = await auth.api.getSession({
-    // headers: req.headers,
-   headers: {
-  cookie: req.headers.cookie
-}
+    headers: req.headers,
+   
   });  // user logged in  hai ay nhi ye check ho rha hai
 
   if (!session) {
@@ -78,10 +77,7 @@ app.post("/api/chat", async (req, res) => {
   const { message } = req.body;  // user message ko message mai check kare
 
   const session = await auth.api.getSession({
-    // headers : req.headers
-   headers: {
-  cookie: req.headers.cookie
-}
+    headers : req.headers
   });   // login check
 
   if (!session ) {
@@ -106,10 +102,8 @@ app.post("/api/chat", async (req, res) => {
 app.use("/api/history" , async (req, res) => {
  try {
    const session = await auth.api.getSession({
-    // headers: req.headers
-    headers: {
-  cookie: req.headers.cookie
-}
+    headers: req.headers
+   
   });  // login check
 
   if (!session) {
