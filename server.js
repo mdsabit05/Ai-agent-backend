@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { auth } from "./config/auth.js";
-import { betterAuth } from "better-auth";
+import { betterAuth, includes } from "better-auth";
 import { toNodeHandler } from "better-auth/node";
 import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
@@ -15,7 +15,6 @@ connectDB()    // mongoDB connected
 const app = express();  // express server created
 
 app.use(express.json());  // json body read karne ke liye middleware
-
 // app.use(
 //   cors({
 //     origin: " https://ai-agent-backend-1-d43j.onrender.com",   // allowing frontend
@@ -23,17 +22,22 @@ app.use(express.json());  // json body read karne ke liye middleware
 //     credentials: true,
 //   }),
 // );
-app.use(cors({
-  origin: [
-  "http://localhost:3000",
-  "https://ai-agent-frontend-up4l.vercel.app",
-  "https://ai-agent-frontend-up4l-git-main-mdsabit05s-projects.vercel.app"],
-  credentials: true
+// app.use(cors({
+//   origin: [
+//   "http://localhost:3000",
+//   "https://ai-agent-frontend-up4l.vercel.app",
+//   "https://ai-agent-frontend-up4l-git-main-mdsabit05s-projects.vercel.app"],
+//   credentials: true
   // [
   //   "http://localhost:3000",
   //   "https://ai-agent-frontend-up4l.vercel.app",
   // "https://ai-agent-frontend-up4l-git-main-mdsabit05s-projects.vercel.app"
   // ],
+// }));
+
+app.use(cors({
+  origin: true,
+  credentials: "include"
 }));
 
 app.use("/api/auth", toNodeHandler(auth));   // betterAuth aona route creat kara (signup , login , session)
@@ -99,18 +103,6 @@ app.use("/api/history" , async (req, res) => {
   res.status(500).json({ error: "AI failed" });
  } // kuch problem hone se error msg
 });
-
-// Logout
-// app.post("/api/auth/logout", async (req, res) => {
-//   await auth.api.signOut({
-//     headers: req.headers,
-//   });
-//   res.json({ message: "Logged out" });
-// });
-
-// app.listen(5000, () => {
-//   console.log("Server running");
-// });
 
 app.set("trust proxy", 1);
 
