@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { auth } from "./config/auth.js";
-import { betterAuth, includes } from "better-auth";
+import { betterAuth } from "better-auth";
 import { toNodeHandler } from "better-auth/node";
 import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
