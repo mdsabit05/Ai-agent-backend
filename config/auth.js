@@ -4,14 +4,13 @@ import { betterAuth }  from "better-auth";
 
 
 
-
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
 
-  baseURL: "https://ai-agent-backend-1-d43j.onrender.com", 
+  baseURL: "https://ai-agent-backend-1-d43j.onrender.com",
 
   emailAndPassword: {
-    enabled: true,
+    enabled: true
   },
 
   trustedOrigins: [
@@ -20,13 +19,14 @@ export const auth = betterAuth({
     "https://ai-agent-frontend-up4l-git-main-mdsabit05s-projects.vercel.app"
   ],
 
- session: {
-  cookie: {
-    sameSite: "none",
-    secure: true,
-    httpOnly: true
+  cookies: {
+    sessionToken: {
+      attributes: {
+        sameSite: "none",
+        secure: true
+      }
+    }
   }
-}
 });
 
 
