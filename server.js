@@ -8,6 +8,9 @@ import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { Chat } from "./models/Chat.js";
 import { connectDB } from "./config/db.js";
+import cookieParser from "cookie-parser";
+
+app.use(cookieParser());
 
 dotenv.config();  // .env connected
 connectDB()    // mongoDB connected
