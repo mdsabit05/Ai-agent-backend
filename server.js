@@ -16,12 +16,20 @@ const app = express();  // express server created
 
 app.use(express.json());  // json body read karne ke liye middleware
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",   // allowing frontend
-    credentials: true,
-  }),
-);
+// app.use(
+//   cors({
+//     origin: " https://ai-agent-backend-1-d43j.onrender.com",   // allowing frontend
+//     // origin: "http://localhost:3000",   // allowing frontend
+//     credentials: true,
+//   }),
+// );
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://ai-agent-frontend-up4l.vercel.app"
+  ],
+  credentials: true
+}));
 
 app.use("/api/auth", toNodeHandler(auth));   // betterAuth aona route creat kara (signup , login , session)
 
@@ -98,5 +106,8 @@ app.use("/api/history" , async (req, res) => {
 // app.listen(5000, () => {
 //   console.log("Server running");
 // });
+
+app.set("trust proxy", 1);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server running"));
