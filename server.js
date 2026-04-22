@@ -14,6 +14,8 @@ connectDB()    // mongoDB connected
 
 const app = express();  // express server created
 
+app.set("trust proxy", 1);
+
 app.use(express.json());  // json body read karne ke liye middleware
 // app.use(
 //   cors({
@@ -35,10 +37,16 @@ app.use(express.json());  // json body read karne ke liye middleware
   // ],
 // }));
 
-app.use(cors({
-  origin: true,
-  credentials: "include"
-}));
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://ai-agent-frontend-up4l.vercel.app"
+    ],
+    credentials: true
+  })
+);
 
 app.use("/api/auth", toNodeHandler(auth));   // betterAuth aona route creat kara (signup , login , session)
 
@@ -104,7 +112,7 @@ app.use("/api/history" , async (req, res) => {
  } // kuch problem hone se error msg
 });
 
-app.set("trust proxy", 1);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server running"));
