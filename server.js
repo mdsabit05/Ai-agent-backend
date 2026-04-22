@@ -53,7 +53,10 @@ app.use("/api/auth", toNodeHandler(auth));   // betterAuth aona route creat kara
 
 app.get("/api/me", async (req, res) => {
   const session = await auth.api.getSession({
-    headers: req.headers,
+    // headers: req.headers,
+   headers: {
+  cookie: req.headers.cookie
+}
   });  // user logged in  hai ay nhi ye check ho rha hai
 
   if (!session) {
@@ -72,7 +75,10 @@ app.post("/api/chat", async (req, res) => {
   const { message } = req.body;  // user message ko message mai check kare
 
   const session = await auth.api.getSession({
-    headers : req.headers
+    // headers : req.headers
+   headers: {
+  cookie: req.headers.cookie
+}
   });   // login check
 
   if (!session ) {
@@ -97,7 +103,10 @@ app.post("/api/chat", async (req, res) => {
 app.use("/api/history" , async (req, res) => {
  try {
    const session = await auth.api.getSession({
-    headers: req.headers
+    // headers: req.headers
+    headers: {
+  cookie: req.headers.cookie
+}
   });  // login check
 
   if (!session) {
