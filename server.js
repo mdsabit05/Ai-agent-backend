@@ -24,7 +24,10 @@ app.use(express.json());  // json body read karne ke liye middleware
 //   }),
 // );
 app.use(cors({
-  origin: true,
+  origin: [
+  "http://localhost:3000",
+  "https://ai-agent-frontend-up4l.vercel.app",
+  "https://ai-agent-frontend-up4l-git-main-mdsabit05s-projects.vercel.app"],
   credentials: true
   // [
   //   "http://localhost:3000",
